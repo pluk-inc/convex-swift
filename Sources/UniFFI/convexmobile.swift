@@ -637,6 +637,10 @@ public protocol MobileConvexClientProtocol : AnyObject {
     
     func query(name: String, args: [String: String]) async throws  -> String
     
+    func runTestFunction(source: String, args: String, componentId: String?) async throws  -> String
+    
+    func setAdminAuth(deployKey: String, actingAs: String?) async throws 
+    
     func setAuth(token: String?) async throws 
     
     func setAuthCallback(provider: AuthTokenProvider?) async throws 
@@ -743,6 +747,40 @@ open func query(name: String, args: [String: String])async throws  -> String {
             completeFunc: ffi_convexmobile_rust_future_complete_rust_buffer,
             freeFunc: ffi_convexmobile_rust_future_free_rust_buffer,
             liftFunc: FfiConverterString.lift,
+            errorHandler: FfiConverterTypeClientError.lift
+        )
+}
+    
+open func runTestFunction(source: String, args: String, componentId: String?)async throws  -> String {
+    return
+        try  await uniffiRustCallAsync(
+            rustFutureFunc: {
+                uniffi_convexmobile_fn_method_mobileconvexclient_run_test_function(
+                    self.uniffiClonePointer(),
+                    FfiConverterString.lower(source),FfiConverterString.lower(args),FfiConverterOptionString.lower(componentId)
+                )
+            },
+            pollFunc: ffi_convexmobile_rust_future_poll_rust_buffer,
+            completeFunc: ffi_convexmobile_rust_future_complete_rust_buffer,
+            freeFunc: ffi_convexmobile_rust_future_free_rust_buffer,
+            liftFunc: FfiConverterString.lift,
+            errorHandler: FfiConverterTypeClientError.lift
+        )
+}
+    
+open func setAdminAuth(deployKey: String, actingAs: String?)async throws  {
+    return
+        try  await uniffiRustCallAsync(
+            rustFutureFunc: {
+                uniffi_convexmobile_fn_method_mobileconvexclient_set_admin_auth(
+                    self.uniffiClonePointer(),
+                    FfiConverterString.lower(deployKey),FfiConverterOptionString.lower(actingAs)
+                )
+            },
+            pollFunc: ffi_convexmobile_rust_future_poll_void,
+            completeFunc: ffi_convexmobile_rust_future_complete_void,
+            freeFunc: ffi_convexmobile_rust_future_free_void,
+            liftFunc: { $0 },
             errorHandler: FfiConverterTypeClientError.lift
         )
 }
@@ -1638,6 +1676,12 @@ private var initializationResult: InitializationResult = {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_convexmobile_checksum_method_mobileconvexclient_query() != 27750) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_convexmobile_checksum_method_mobileconvexclient_run_test_function() != 54930) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_convexmobile_checksum_method_mobileconvexclient_set_admin_auth() != 54180) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_convexmobile_checksum_method_mobileconvexclient_set_auth() != 54530) {
