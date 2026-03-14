@@ -152,7 +152,26 @@ public class ConvexClient {
   }
 
   typealias RemoteCall = (String, [String: String]) async throws -> String
-  
+
+  /// Executes a one-shot query with the given `name` and `args` and returns the decoded result.
+  public func query<T: Decodable>(name: String, with args: [String: ConvexEncodable?]? = nil)
+    async throws -> T
+  {
+    try await callForResult(name: name, args: args, remoteCall: ffiClient.query)
+  }
+
+  /// Sets admin authentication using a deploy key.
+  public func setAdminAuth(deployKey: String, actingAs: String? = nil) async throws {
+    try await ffiClient.setAdminAuth(deployKey: deployKey, actingAs: actingAs)
+  }
+
+  /// Executes arbitrary JavaScript on the Convex backend via the `run_test_function` endpoint.
+  public func runTestFunction(source: String, args: String = "{}", componentId: String? = nil)
+    async throws -> String
+  {
+    try await ffiClient.runTestFunction(source: source, args: args, componentId: componentId)
+  }
+
   public func watchWebSocketState() -> AnyPublisher<WebSocketState, Never> {
     return webSocketStateAdapter.newPublisher()
   }
