@@ -3,7 +3,7 @@
 
 import PackageDescription
 
-let releaseTag = "0.3.0"
+let releaseTag = "0.8.7"
 let releaseChecksum = "5630c89fa6a57161d3ed53d56a66d2e04ead70debadb1953b208ad0b44cbcdb4"
 
 let binaryTarget: Target = .binaryTarget(
