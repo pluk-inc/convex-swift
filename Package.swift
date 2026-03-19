@@ -3,9 +3,13 @@
 
 import PackageDescription
 
+let releaseTag = "0.3.0"
+let releaseChecksum = "5630c89fa6a57161d3ed53d56a66d2e04ead70debadb1953b208ad0b44cbcdb4"
+
 let binaryTarget: Target = .binaryTarget(
   name: "ConvexMobileCoreRS",
-  path: "libconvexmobile-rs.xcframework"
+  url: "https://github.com/pluk-inc/convex-swift/releases/download/\(releaseTag)/libconvexmobile-rs.xcframework.zip",
+  checksum: releaseChecksum
 )
 
 let package = Package(
