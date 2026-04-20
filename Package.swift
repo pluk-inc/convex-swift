@@ -3,8 +3,8 @@
 
 import PackageDescription
 
-let releaseTag = "0.8.7"
-let releaseChecksum = "5630c89fa6a57161d3ed53d56a66d2e04ead70debadb1953b208ad0b44cbcdb4"
+let releaseTag = "0.8.8"
+let releaseChecksum = "1cd863994f294859bf69445b1a65ff05d1f4f005decda25968f00f9a34b75274"
 
 let binaryTarget: Target = .binaryTarget(
   name: "ConvexMobileCoreRS",
